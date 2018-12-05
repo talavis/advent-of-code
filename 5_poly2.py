@@ -3,6 +3,9 @@
 import string
 import sys
 
+CONVERTER = dict(zip(string.ascii_lowercase + string.ascii_uppercase,
+                     string.ascii_uppercase + string.ascii_lowercase))
+
 def test_short():
     seq = 'dabAcCaCBAcCcaDA'
     assert find_shortest_rm(seq) == 4
@@ -24,13 +27,16 @@ def find_shortest_rm(seq):
     return shortest
         
 
+
 def calc_poly(seq):
-    old_len = 0
-    while old_len != len(seq):
-        old_len = len(seq)
-        for c in string.ascii_lowercase:
-            seq = seq.replace(c + c.upper(), '')
-            seq = seq.replace(c.upper() + c, '')
+    i = 0
+    while i < len(seq)-1:
+        if seq[i] == CONVERTER[seq[i+1]]:
+            seq = seq[:i]+seq[i+2:]
+            if i > 0:
+                i -= 1
+        else:
+            i += 1
     return seq 
        
 
