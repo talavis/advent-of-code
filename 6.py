@@ -8,14 +8,19 @@ class Node:
         self.children = []
         self.parent = parent
 
-    def find(self, name):
+    def find_child(self, name):
         if self.name == name:
             return self
         for child in self.children:
-            result = child.find(name)
+            result = child.find_child(name)
             if result:
                 return result
         return None
+
+    def parents(self,):
+        if self.parent == None:
+            return [self.name]
+        return [self.name] + self.parent.parents()
 
     def nr_parents(self):
         if self.parent == None:
@@ -59,4 +64,12 @@ if __name__ == '__main__':
         add_connections(root)
 
     print(f'Part a: {root.nr_orbits()}')
-        
+
+    node1_parents = root.find_child('YOU').parents()
+    node2_parents = root.find_child('SAN').parents()
+    i = -1
+    while node1_parents[i] == node2_parents[i]:
+        i -= 1
+
+    dist = len(node1_parents) + len(node2_parents) + 2*i
+    print(f'Part b: {dist}')
