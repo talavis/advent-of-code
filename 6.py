@@ -35,19 +35,28 @@ class Node:
             child.print_children(indent+1)
         
 
+def add_connections(node):
+    if node.name in connections:
+        children = connections[node.name]
+        for child in children:
+            current = Node(child, node)
+            add_connections(current)
+            node.children.append(current)
+            
+
 if __name__ == '__main__':
     root = None
     with open(sys.argv[1]) as infile:
+        connections = dict()
         for line in infile:
             parent, child = line.strip().split(')')
-
-            if parent == 'COM':
-                root = Node(parent)
-                current = root
+            if parent in connections:
+                connections[parent].append(child)
             else:
-                current = root.find(parent)
+                connections[parent] = [child]
 
-            current.children.append(Node(child, current))
+        root = Node('COM')
+        add_connections(root)
 
     print(f'Part a: {root.nr_orbits()}')
         
