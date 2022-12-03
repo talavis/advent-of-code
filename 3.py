@@ -37,8 +37,8 @@ test_data = ["vJrwpWtwJgWrhcsFMMfFFhFp",
              "ttgJtRGJQctTZtZT",
              "CrZsJsPPZsGzwwsLwLmpwMDw"]
 
-print(f"Test: {calc(test_data)} (should be 157)")
-print(f"Test: {calc2(test_data)} (should be 70)")
+print(f"Test part 1: {calc(test_data)} (should be 157)")
+print(f"Test part 2: {calc2(test_data)} (should be 70)")
 
 data = [row for row in open("3.dat").read().split("\n") if row]
 
