@@ -18,41 +18,19 @@ def parse(indata):
     return data
 
 
-def calc(indata, target=2000000):
-    score = 0
-    data = parse(indata)
-    extra = 100
-    hits = set()
-    for row in data:
-        if row[0][1] == target:
-            hits.add((row[0][0], row[0][1])) 
-        if row[1][1] == target:
-            hits.add((row[1][0], row[1][1])) 
-        distance = abs(row[0][0]-row[1][0]) + abs(row[0][1]-row[1][1])
-        ymin = row[0][1]-distance
-        ymax = row[0][1]+distance
-        for y in range(ymin, ymax):
-            dmod = min(y-ymin, ymax-y)
-            if y == target:
-                xmin = row[0][0]-(dmod)
-                xmax = row[0][0]+(dmod)
-                for x in range(xmin, xmax):
-                    hits.add((x, y))
-                           
-#    for row in matrix:
-#        print("".join(row))
-    return len(hits)
-
-def find_blockers(y, sensors, beacons):
+def find_blockers(y, sensors, beacons, only_pos=True):
     blockers = []
     for sen in sensors:
         ydist = abs(y - sen[1])
         if ydist < sen[2]:
             start = sen[0]-(sen[2]-ydist)
             end = sen[0]+(sen[2]-ydist)
-            if start < 0:
-                start = 0
-            if end >= 0:
+            if only_pos:
+                if start < 0:
+                    start = 0
+                if end >= 0:
+                    blockers.append([start, end])
+            else:
                 blockers.append([start, end])
     for bea in beacons:
         if bea[1] == y and bea[0] > 0:
@@ -68,10 +46,20 @@ def find_blockers(y, sensors, beacons):
         else:
             i += 1
     return blockers
-    
+
+
+def calc(indata, target=2000000):
+    data = parse(indata)
+    sensors = [(row[0][0], row[0][1], abs(row[0][0]-row[1][0]) + abs(row[0][1]-row[1][1])) for row in data]
+    beacons = [tuple(row[1]) for row in data]
+    blockers = find_blockers(target, sensors, beacons, only_pos=False)
+    n_blocked = 0
+    for blo in blockers:
+        n_blocked += blo[1]-blo[0]
+    return n_blocked
+
 
 def calc2(indata, target=4000000):
-    score = 0
     data = parse(indata)
     hits = set()
     sensors = [(row[0][0], row[0][1], abs(row[0][0]-row[1][0]) + abs(row[0][1]-row[1][1])) for row in data]
