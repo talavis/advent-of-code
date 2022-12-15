@@ -3,58 +3,64 @@ import requests
 
 day = 11
 
+
 def do_op(op, item):
     if op[2:] == "old":
         val = item
     else:
         val = int(op[2:])
     if op[0] == "*":
-        return item*val
+        return item * val
     if op[0] == "+":
-        return item+val
-        
+        return item + val
+
 
 def calc(data):
     score = 0
     monkeys = []
-    for i in range(0,len(data), 6):
-        monkeys.append({
-            "items": [int(item) for item in data[i+1][18:].split(", ")],
-            "op": data[i+2][23:],
-            "test": int(data[i+3][21:]),
-            "true": int(data[i+4][29:]),
-            "false": int(data[i+5][30:]),
-            "inspected": 0,
-        })
+    for i in range(0, len(data), 6):
+        monkeys.append(
+            {
+                "items": [int(item) for item in data[i + 1][18:].split(", ")],
+                "op": data[i + 2][23:],
+                "test": int(data[i + 3][21:]),
+                "true": int(data[i + 4][29:]),
+                "false": int(data[i + 5][30:]),
+                "inspected": 0,
+            }
+        )
 
     import pprint
+
     for _ in range(20):
         for i, monkey in enumerate(monkeys):
             for item in monkey["items"]:
                 monkey["inspected"] += 1
-                worry = do_op(monkey["op"], item)//3
+                worry = do_op(monkey["op"], item) // 3
                 if worry % monkey["test"] == 0:
                     monkeys[monkey["true"]]["items"].append(worry)
                 else:
                     monkeys[monkey["false"]]["items"].append(worry)
             monkey["items"] = []
     inspections = sorted([monkey["inspected"] for monkey in monkeys])
-    return inspections[-1]*inspections[-2]
+    return inspections[-1] * inspections[-2]
 
 
 def calc2(data):
     monkeys = []
-    for i in range(0,len(data), 6):
-        monkeys.append({
-            "items": [int(item) for item in data[i+1][18:].split(", ")],
-            "op": data[i+2][23:],
-            "test": int(data[i+3][21:]),
-            "true": int(data[i+4][29:]),
-            "false": int(data[i+5][30:]),
-            "inspected": 0,
-        })
+    for i in range(0, len(data), 6):
+        monkeys.append(
+            {
+                "items": [int(item) for item in data[i + 1][18:].split(", ")],
+                "op": data[i + 2][23:],
+                "test": int(data[i + 3][21:]),
+                "true": int(data[i + 4][29:]),
+                "false": int(data[i + 5][30:]),
+                "inspected": 0,
+            }
+        )
 
-    max_tests = functools.reduce(lambda a,b: a*b, [m["test"] for m in monkeys])
+    max_tests = functools.reduce(lambda a, b: a * b, [m["test"] for m in monkeys])
     for r in range(10000):
         for i, monkey in enumerate(monkeys):
             for item in monkey["items"]:
@@ -66,7 +72,7 @@ def calc2(data):
                     monkeys[monkey["false"]]["items"].append(worry)
             monkey["items"] = []
     inspections = sorted([monkey["inspected"] for monkey in monkeys])
-    return inspections[-1]*inspections[-2]
+    return inspections[-1] * inspections[-2]
 
 
 test_data = """Monkey 0:

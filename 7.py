@@ -2,12 +2,13 @@ import requests
 
 day = 7
 
+
 class Folder:
     def __init__(self, parent):
         self._parent = parent
         self._files = {}
         self._dirs = {}
-        
+
     def parent(self):
         return self._parent
 
@@ -43,14 +44,14 @@ class Folder:
         print("Files:")
         for entry in self._files:
             print(f"{entry}: {self._files[entry]}")
-    
+
 
 def calc(data):
     score = 0
 
     root = Folder(None)
     pwd = root
-    
+
     for row in data:
         if row[0] == "$":
             if row.startswith("$ ls"):
@@ -81,7 +82,7 @@ def calc2(data):
 
     root = Folder(None)
     pwd = root
-    
+
     for row in data:
         if row[0] == "$":
             if row.startswith("$ ls"):
@@ -103,7 +104,7 @@ def calc2(data):
 
     total = 70000000
     sizes = root.folder_sizes()
-    needed = 30000000-(total-sizes[0])
+    needed = 30000000 - (total - sizes[0])
     sizes.sort()
     for val in sizes:
         if val > needed:

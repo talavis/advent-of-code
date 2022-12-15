@@ -2,18 +2,13 @@ import requests
 
 day = 15
 
+
 def parse(indata):
     data = []
     for row in indata:
         cols = row.split()
-        sensor = [
-            int(cols[2].split("=")[1][:-1]),
-            int(cols[3].split("=")[1][:-1])
-        ]
-        beacon = [
-            int(cols[8].split("=")[1][:-1]),
-            int(cols[9].split("=")[1])
-        ]
+        sensor = [int(cols[2].split("=")[1][:-1]), int(cols[3].split("=")[1][:-1])]
+        beacon = [int(cols[8].split("=")[1][:-1]), int(cols[9].split("=")[1])]
         data.append([sensor, beacon])
     return data
 
@@ -23,8 +18,8 @@ def find_blockers(y, sensors, beacons, only_pos=True):
     for sen in sensors:
         ydist = abs(y - sen[1])
         if ydist < sen[2]:
-            start = sen[0]-(sen[2]-ydist)
-            end = sen[0]+(sen[2]-ydist)
+            start = sen[0] - (sen[2] - ydist)
+            end = sen[0] + (sen[2] - ydist)
             if only_pos:
                 if start < 0:
                     start = 0
@@ -37,12 +32,12 @@ def find_blockers(y, sensors, beacons, only_pos=True):
             blockers.append([bea[1], bea[1]])
     blockers.sort(key=lambda x: x[0])
     i = 0
-    while i < len(blockers)-1:
-        if blockers[i][1] >= blockers[i+1][1]:
-            blockers.pop(i+1)
-        elif blockers[i][1] >= blockers[i+1][0] and blockers[i][1] < blockers[i+1][1]:
-            blockers[i][1] = blockers[i+1][1]
-            blockers.pop(i+1)
+    while i < len(blockers) - 1:
+        if blockers[i][1] >= blockers[i + 1][1]:
+            blockers.pop(i + 1)
+        elif blockers[i][1] >= blockers[i + 1][0] and blockers[i][1] < blockers[i + 1][1]:
+            blockers[i][1] = blockers[i + 1][1]
+            blockers.pop(i + 1)
         else:
             i += 1
     return blockers
@@ -50,27 +45,33 @@ def find_blockers(y, sensors, beacons, only_pos=True):
 
 def calc(indata, target=2000000):
     data = parse(indata)
-    sensors = [(row[0][0], row[0][1], abs(row[0][0]-row[1][0]) + abs(row[0][1]-row[1][1])) for row in data]
+    sensors = [
+        (row[0][0], row[0][1], abs(row[0][0] - row[1][0]) + abs(row[0][1] - row[1][1]))
+        for row in data
+    ]
     beacons = [tuple(row[1]) for row in data]
     blockers = find_blockers(target, sensors, beacons, only_pos=False)
     n_blocked = 0
     for blo in blockers:
-        n_blocked += blo[1]-blo[0]
+        n_blocked += blo[1] - blo[0]
     return n_blocked
 
 
 def calc2(indata, target=4000000):
     data = parse(indata)
     hits = set()
-    sensors = [(row[0][0], row[0][1], abs(row[0][0]-row[1][0]) + abs(row[0][1]-row[1][1])) for row in data]
+    sensors = [
+        (row[0][0], row[0][1], abs(row[0][0] - row[1][0]) + abs(row[0][1] - row[1][1]))
+        for row in data
+    ]
     beacons = [tuple(row[1]) for row in data]
-    for y in range(0, target+1):
+    for y in range(0, target + 1):
         blockers = find_blockers(y, sensors, beacons)
         if blockers[0][0] != 0:
             return y
         elif blockers[0][1] < target:
-            return (blockers[0][1]+1) * 4000000 + y
-        
+            return (blockers[0][1] + 1) * 4000000 + y
+
     return -1
 
 

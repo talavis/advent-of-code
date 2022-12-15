@@ -2,7 +2,7 @@ def calc(data):
     score = 0
     for row in data:
         first = row[0].split("-")
-        first = int(first[0]), int(first[1]) 
+        first = int(first[0]), int(first[1])
         second = row[1].split("-")
         second = int(second[0]), int(second[1])
         if first[0] <= second[0] and first[1] >= second[1]:
@@ -17,10 +17,10 @@ def calc2(data):
     score = 0
     for row in data:
         first = row[0].split("-")
-        first = int(first[0]), int(first[1]) 
+        first = int(first[0]), int(first[1])
         second = row[1].split("-")
         second = int(second[0]), int(second[1])
-        if not(second[1] < first[0] or first[1] < second[0]):
+        if not (second[1] < first[0] or first[1] < second[0]):
             score += 1
     return score
 

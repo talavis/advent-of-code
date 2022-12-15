@@ -2,16 +2,17 @@ import requests
 
 day = 9
 
+
 def calc(data):
-    hcoord = [0,0]
-    tcoord = [0,0]
-    passed = {(0,0)}
-    changer = (0,0)
+    hcoord = [0, 0]
+    tcoord = [0, 0]
+    passed = {(0, 0)}
+    changer = (0, 0)
     for row in data:
         if row[0] == "R":
-            changer = (1,0)
+            changer = (1, 0)
         elif row[0] == "L":
-            changer = (-1,0)
+            changer = (-1, 0)
         elif row[0] == "U":
             changer = (0, 1)
         elif row[0] == "D":
@@ -19,7 +20,7 @@ def calc(data):
         for _ in range(int(row[2:])):
             hcoord[0] += changer[0]
             hcoord[1] += changer[1]
-            if abs(tcoord[0]-hcoord[0]) > 1 or abs(tcoord[1]-hcoord[1]) > 1:
+            if abs(tcoord[0] - hcoord[0]) > 1 or abs(tcoord[1] - hcoord[1]) > 1:
                 tcoord[0] += changer[0]
                 tcoord[1] += changer[1]
 
@@ -39,7 +40,7 @@ def calc(data):
 
 
 def check_dist(hcoord, tcoord):
-    if abs(tcoord[0]-hcoord[0]) > 1:
+    if abs(tcoord[0] - hcoord[0]) > 1:
         if hcoord[0] > tcoord[0]:
             tcoord[0] += 1
             if hcoord[1] > tcoord[1]:
@@ -52,7 +53,7 @@ def check_dist(hcoord, tcoord):
                 tcoord[1] += 1
             if hcoord[1] < tcoord[1]:
                 tcoord[1] -= 1
-    if abs(tcoord[1]-hcoord[1]) > 1:
+    if abs(tcoord[1] - hcoord[1]) > 1:
         if hcoord[1] > tcoord[1]:
             tcoord[1] += 1
             if hcoord[0] > tcoord[0]:
@@ -69,15 +70,15 @@ def check_dist(hcoord, tcoord):
 
 def calc2(data):
     score = 0
-    hcoord = [0,0]
-    tail = [[0,0] for _ in range(9)]
-    passed = {(0,0)}
-    changer = (0,0)
+    hcoord = [0, 0]
+    tail = [[0, 0] for _ in range(9)]
+    passed = {(0, 0)}
+    changer = (0, 0)
     for row in data:
         if row[0] == "R":
-            changer = (1,0)
+            changer = (1, 0)
         elif row[0] == "L":
-            changer = (-1,0)
+            changer = (-1, 0)
         elif row[0] == "U":
             changer = (0, 1)
         elif row[0] == "D":
@@ -85,16 +86,16 @@ def calc2(data):
         for _ in range(int(row[2:])):
             hcoord[0] += changer[0]
             hcoord[1] += changer[1]
-            change = check_dist(hcoord, tail[0])            
+            change = check_dist(hcoord, tail[0])
             for i in range(1, len(tail)):
-                change = check_dist(tail[i-1], tail[i])
+                change = check_dist(tail[i - 1], tail[i])
             passed.add(tuple(tail[8]))
     return len(passed)
 
 
-def print_coord(coords, matrix_side=0, start=(0,0), rope=False):
+def print_coord(coords, matrix_side=0, start=(0, 0), rope=False):
     if matrix_side:
-        matrix = [["."]*matrix_side for _ in range(matrix_side)]
+        matrix = [["."] * matrix_side for _ in range(matrix_side)]
         xmin = min([val[0] for val in coords])
         ymin = min([val[1] for val in coords])
 
@@ -103,7 +104,7 @@ def print_coord(coords, matrix_side=0, start=(0,0), rope=False):
         xmax = max([val[0] for val in coords])
         ymin = min([val[1] for val in coords])
         ymax = max([val[1] for val in coords])
-        matrix = [["."]*(abs(xmin-xmax)+1) for _ in range(abs(ymin-ymax)+1)]
+        matrix = [["."] * (abs(xmin - xmax) + 1) for _ in range(abs(ymin - ymax) + 1)]
     if not start:
         xmod = -xmin
         ymod = -ymin
@@ -117,10 +118,11 @@ def print_coord(coords, matrix_side=0, start=(0,0), rope=False):
             char = rope_pos[i]
         else:
             char = "#"
-        if matrix[val[1]+ymod][val[0]+xmod] == '.':
-            matrix[val[1]+ymod][val[0]+xmod] = char
+        if matrix[val[1] + ymod][val[0] + xmod] == ".":
+            matrix[val[1] + ymod][val[0] + xmod] = char
     for row in matrix[::-1]:
-        print(''.join(row))
+        print("".join(row))
+
 
 test_data = """R 4
 U 4

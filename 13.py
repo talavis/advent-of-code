@@ -6,14 +6,18 @@ day = 13
 
 # used as a wrapper to make it possible to use sort()
 class Value:
-    def __init__(self,value):
+    def __init__(self, value):
         self._value = value
+
     def __lt__(self, right):
         return compare(self._value, right._value)
+
     def __gt__(self, right):
         return compare(right._value, self._value)
+
     def __eq__(self, right):
         return self._value == right
+
     def __repr__(self) -> str:
         return f"{self._value}"
 
@@ -37,16 +41,16 @@ def compare(left, right):
         return False
 
     return None
-            
+
 
 def calc(data):
     score = 0
     for i in range(0, len(data), 2):
         dat1 = json.loads(data[i])
-        dat2 = json.loads(data[i+1])
+        dat2 = json.loads(data[i + 1])
         res = compare(dat1, dat2)
         if res:
-            score += i//2+1
+            score += i // 2 + 1
     return score
 
 
@@ -56,7 +60,7 @@ def calc2(data):
     decode2 = Value([[6]])
     loaded += [decode1, decode2]
     loaded.sort()
-    return (loaded.index(decode1)+1)*(loaded.index(decode2)+1)
+    return (loaded.index(decode1) + 1) * (loaded.index(decode2) + 1)
 
 
 test_data = """[1,1,3,1,1]

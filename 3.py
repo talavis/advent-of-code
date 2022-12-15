@@ -1,17 +1,17 @@
 def calc(data):
     score = 0
     for row in data:
-        comp1 = row[:len(row)//2]
-        comp2 = row[len(row)//2:]
+        comp1 = row[: len(row) // 2]
+        comp2 = row[len(row) // 2 :]
         both = ""
         for c in comp1:
             if c in comp2:
                 break
 
         if ord(c) < ord("a"):
-            score += ord(c)-ord("A")+27
+            score += ord(c) - ord("A") + 27
         else:
-            score += ord(c)-ord("a")+1
+            score += ord(c) - ord("a") + 1
     return score
 
 
@@ -19,23 +19,25 @@ def calc2(data):
     score = 0
     for i in range(0, len(data), 3):
         for c in data[i]:
-            if c in data[i+1]:
-                if c in data[i+2]:
+            if c in data[i + 1]:
+                if c in data[i + 2]:
                     break
         if ord(c) < ord("a"):
-            score += ord(c)-ord("A")+27
+            score += ord(c) - ord("A") + 27
         else:
-            score += ord(c)-ord("a")+1
-    
+            score += ord(c) - ord("a") + 1
+
     return score
 
 
-test_data = ["vJrwpWtwJgWrhcsFMMfFFhFp",
-             "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-             "PmmdzqPrVvPwwTWBwg",
-             "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-             "ttgJtRGJQctTZtZT",
-             "CrZsJsPPZsGzwwsLwLmpwMDw"]
+test_data = [
+    "vJrwpWtwJgWrhcsFMMfFFhFp",
+    "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+    "PmmdzqPrVvPwwTWBwg",
+    "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+    "ttgJtRGJQctTZtZT",
+    "CrZsJsPPZsGzwwsLwLmpwMDw",
+]
 
 print(f"Test part 1: {calc(test_data)} (should be 157)")
 print(f"Test part 2: {calc2(test_data)} (should be 70)")

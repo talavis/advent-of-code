@@ -2,16 +2,17 @@ import requests
 
 day = 6
 
+
 def calc(data):
     for i in range(4, len(data)):
-        if len(set(data[i-4:i])) == 4:
+        if len(set(data[i - 4 : i])) == 4:
             return i
     return 0
 
 
 def calc2(data):
     for i in range(14, len(data)):
-        if len(set(data[i-14:i])) == 14:
+        if len(set(data[i - 14 : i])) == 14:
             return i
     return 0
 

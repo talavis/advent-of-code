@@ -2,47 +2,48 @@ import requests
 
 day = 8
 
+
 def calc(data):
     for i in range(len(data)):
         data[i] = [int(dat) for dat in data[i]]
-    matrix = [[0]*len(data[0]) for _ in range(len(data))]
-    matrix[0] = [1]*len(data)
-    matrix[-1] = [1]*len(data)
-    score = len(data)*2+len(data[0])*2-4
-    for i in range(1, len(data)-1):
+    matrix = [[0] * len(data[0]) for _ in range(len(data))]
+    matrix[0] = [1] * len(data)
+    matrix[-1] = [1] * len(data)
+    score = len(data) * 2 + len(data[0]) * 2 - 4
+    for i in range(1, len(data) - 1):
         matrix[i][0] = 1
         matrix[i][-1] = 1
     # right
-    for i in range(1, len(data)-1):
+    for i in range(1, len(data) - 1):
         tallest = data[i][0]
-        for j in range(1, len(data[0])-1):
+        for j in range(1, len(data[0]) - 1):
             if tallest < data[i][j]:
                 matrix[i][j] = 1
                 tallest = data[i][j]
             if tallest == 9:
                 break
     # left
-    for i in range(1, len(data)-1):
+    for i in range(1, len(data) - 1):
         tallest = data[i][-1]
-        for j in range(len(data[0])-2, 0, -1):
+        for j in range(len(data[0]) - 2, 0, -1):
             if tallest < data[i][j]:
                 matrix[i][j] = 1
                 tallest = data[i][j]
             if tallest == 9:
                 break
     # down
-    for j in range(1, len(data)-1):
+    for j in range(1, len(data) - 1):
         tallest = data[0][j]
-        for i in range(1, len(data)-1):
+        for i in range(1, len(data) - 1):
             if tallest < data[i][j]:
                 matrix[i][j] = 1
                 tallest = data[i][j]
             if tallest == 9:
                 break
     # down
-    for j in range(1, len(data)-1):
+    for j in range(1, len(data) - 1):
         tallest = data[-1][j]
-        for i in range(len(data)-2, 0, -1):
+        for i in range(len(data) - 2, 0, -1):
             if tallest < data[i][j]:
                 matrix[i][j] = 1
                 tallest = data[i][j]
@@ -58,36 +59,36 @@ def calc2(data):
     for i in range(len(data)):
         data[i] = [int(dat) for dat in data[i]]
     best = 0
-    for i in range(1, len(data)-1):
-        for j in range(1, len(data[0])-1):
+    for i in range(1, len(data) - 1):
+        for j in range(1, len(data[0]) - 1):
             tmp = 1
             a = i
             while a > 0:
                 a -= 1
                 if data[a][j] >= data[i][j]:
                     break
-            tmp *= (i-a)
+            tmp *= i - a
 
             a = i
-            while a < len(data)-1:
+            while a < len(data) - 1:
                 a += 1
                 if data[a][j] >= data[i][j]:
                     break
-            tmp *= (a-i)
-            
+            tmp *= a - i
+
             a = j
             while a > 0:
                 a -= 1
                 if data[i][a] >= data[i][j]:
                     break
-            tmp *= (j-a)
-                    
+            tmp *= j - a
+
             a = j
-            while a < len(data[0])-1:
+            while a < len(data[0]) - 1:
                 a += 1
                 if data[i][a] >= data[i][j]:
                     break
-            tmp *= (a-j)
+            tmp *= a - j
 
             if tmp > best:
                 best = tmp

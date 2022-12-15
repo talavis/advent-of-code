@@ -10,14 +10,15 @@ for row in data:
         continue
     elves[-1] += int(row)
 
-print(max(elves))
+res1 = max(elves)
 
-total = 0
-for i in range(3):
-    total += max(elves)
-    elves.pop(elves.index(max(elves)))
+elves.sort()
 
-print(total)
+res2 = sum(elves[-3:])
+
 end = time.time()
+
+print(res1)
+print(res2)
 
 print(f"Runtime: {end-start} seconds")

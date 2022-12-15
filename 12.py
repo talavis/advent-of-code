@@ -1,6 +1,7 @@
 import requests
 
 import sys
+
 sys.setrecursionlimit(40000)
 
 day = 12
@@ -10,6 +11,7 @@ ACTIVE = -1
 FAIL = -2
 
 LETTERS = "SabcdefghijklmnopqrstuvwxyzE"
+
 
 class Node:
     def __init__(self, value, neighbours=None):
@@ -27,8 +29,8 @@ class Node:
     def update_neighbours(self):
         for neigh in self.neighbours:
             if neigh.value - self.value >= -1:
-                if self.dist+1 < neigh.dist:
-                    neigh.dist = self.dist+1
+                if self.dist + 1 < neigh.dist:
+                    neigh.dist = self.dist + 1
                     neigh.prev = self
         self.visited = True
 
@@ -48,13 +50,13 @@ class Container:
             for j, node in enumerate(row):
                 node.neighbours = []
                 if i > 0:
-                    node.neighbours.append(nodes[i-1][j])
-                if i < len(nodes)-1:
-                    node.neighbours.append(nodes[i+1][j])
+                    node.neighbours.append(nodes[i - 1][j])
+                if i < len(nodes) - 1:
+                    node.neighbours.append(nodes[i + 1][j])
                 if j > 0:
-                    node.neighbours.append(nodes[i][j-1])
-                if j < len(nodes[i])-1:
-                    node.neighbours.append(nodes[i][j+1])
+                    node.neighbours.append(nodes[i][j - 1])
+                if j < len(nodes[i]) - 1:
+                    node.neighbours.append(nodes[i][j + 1])
             self.nodes += row
 
     def next_node(self):
@@ -70,13 +72,12 @@ class Container:
             node.update_neighbours()
         return self.s.dist
 
-
     def shortest_climb(self):
         while node := self.next_node():
             node.update_neighbours()
         a_nodes = [node for node in self.nodes if node.value == LETTERS.index("a")]
         return min(a_nodes, key=lambda x: x.dist).dist
-        
+
 
 def calc(data):
     container = Container(data)
