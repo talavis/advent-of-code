@@ -1,6 +1,9 @@
 import requests
 
 day = 1
+testing = True
+active = False
+
 
 def parse(indata):
     data_rows = raw.split("\n")
@@ -21,9 +24,8 @@ def calc2(data):
 test_data = """
 """
 
-test_data = [row for row in test_data.split("\n") if row]
+test_data = parse(testdata)
 
-testing = True
 if testing:
     res1 = calc(test_data)
     res2 = calc2(test_data)
@@ -32,7 +34,6 @@ if testing:
     print(f"Test part 1: {res1} ({ans1}){'   !!!' if res1 != ans1 else ''}")
     print(f"Test part 2: {res2} ({ans2}){'   !!!' if res2 != ans2 else ''}")
 
-active = True
 if active:
     cookies = {"session": open("cookie.dat").read()}
     try:
