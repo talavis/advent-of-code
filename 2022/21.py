@@ -8,6 +8,7 @@ part2 = True
 testing = True
 active = True
 
+
 class Monkey:
     def __init__(self, name, cols):
         self.name = name
@@ -24,7 +25,7 @@ class Monkey:
 
     def __repr__(self):
         return f"<{self.name} s={self.shout}>"
-            
+
     def value(self, ref):
         if self.shout is None:
             if self.op == "+":
@@ -33,10 +34,9 @@ class Monkey:
                 val = ref[self.monk1].value(ref) - ref[self.monk2].value(ref)
             elif self.op == "*":
                 val = ref[self.monk1].value(ref) * ref[self.monk2].value(ref)
-            elif self.op == "/":  # assume whole integers
+            elif self.op == "/":
                 val = ref[self.monk1].value(ref) / ref[self.monk2].value(ref)
             elif self.op == "=":
-#                print(ref[self.monk1].value(ref), ref[self.monk2].value(ref), ref[self.monk1].value(ref)-ref[self.monk2].value(ref))
                 return (ref[self.monk1].value(ref), ref[self.monk2].value(ref))
             self.shout = val
         return self.shout
@@ -66,23 +66,22 @@ def calc2(data):
 
     data["humn"].shout = 0
     res = data["root"].value(data)
-    diff = res[0]-res[1]
+    diff = res[0] - res[1]
     if diff < 0:
         reverse = True
     else:
         reverse = False
-    # assumes res[0] > res[1], res[1] is unchanged, which was true for test data and my input
     l = 0
-    h = 10*abs(diff)  # arbitrary start number
+    h = 10 * abs(diff)  # arbitrary start number, worked for my data
     while diff != 0:
-        mid = l+(h-l)//2
+        mid = l + (h - l) // 2
         data = copy.deepcopy(orig)
         data["humn"].shout = mid
         res = data["root"].value(data)
         if reverse:
-            diff = res[1]-res[0]
+            diff = res[1] - res[0]
         else:
-            diff = res[0]-res[1]
+            diff = res[0] - res[1]
         if diff > 0:
             l = mid
         elif diff < 0:
