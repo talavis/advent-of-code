@@ -53,7 +53,7 @@ def step(positions, dirs, b_size):
 
 
 @functools.cache
-def precalc(data):
+def precalc(data, cycle):
     b_size = (len(data), len(data[0]))
     blizz_dirs = []
     blizz_steps = [[]]
@@ -63,7 +63,6 @@ def precalc(data):
                 blizz_steps[0].append((i, j))
                 blizz_dirs.append(blizz_dir(c))
 
-    cycle = common_div(len(data), len(data[0]))
     for _ in range(cycle - 1):
         blizz_steps.append(step(blizz_steps[-1], blizz_dirs, b_size))
 
@@ -88,74 +87,15 @@ def common_div(val1, val2):
     return divs
 
 
-def calc(data):
-    start = (0, data[0].index("."))
-    pos = (0, data[0].index("."))
-    target = (len(data) - 1, data[-1].index("."))
-    blocked = precalc(data)
-    cycle = common_div(len(data), len(data[0]))
-
+def solve(start, target, blocked, cycle, s=0):
     current = {start}
-    s = 0
     while target not in current:
         s += 1
         future = set()
         for pos in current:
             if pos[0] == 0:
                 possible = [pos, (pos[0] + 1, pos[1])]
-            else:
-                possible = [
-                    pos,
-                    (pos[0] - 1, pos[1]),
-                    (pos[0] + 1, pos[1]),
-                    (pos[0], pos[1] - 1),
-                    (pos[0], pos[1] + 1),
-                ]
-            for poss in possible:
-                if (s + 1) % cycle not in blocked[poss[0]][poss[1]]:
-                    future.add(poss)
-        current = future
-    s += 1
-    return s
-
-
-def calc2(data):
-    start = (0, data[0].index("."))
-    pos = (0, data[0].index("."))
-    target = (len(data) - 1, data[-1].index("."))
-    blocked = precalc(data)
-
-    cycle = common_div(len(data), len(data[0]))
-
-    current = {start}
-    s = 0
-    while target not in current:
-        s += 1
-        future = set()
-        for pos in current:
-            if pos[0] == 0:
-                possible = [pos, (pos[0] + 1, pos[1])]
-            else:
-                possible = [
-                    pos,
-                    (pos[0] - 1, pos[1]),
-                    (pos[0] + 1, pos[1]),
-                    (pos[0], pos[1] - 1),
-                    (pos[0], pos[1] + 1),
-                ]
-            for poss in possible:
-                if (s + 1) % cycle not in blocked[poss[0]][poss[1]]:
-                    future.add(poss)
-        current = future
-
-    current = {target}
-    while start not in current:
-        s += 1
-        future = set()
-        for pos in current:
-            if pos[0] == 0:
-                possible = [pos, (pos[0] + 1, pos[1])]
-            if pos[0] == len(data) - 1:
+            elif pos[0] == len(blocked)-1:
                 possible = [pos, (pos[0] - 1, pos[1])]
             else:
                 possible = [
@@ -169,26 +109,32 @@ def calc2(data):
                 if (s + 1) % cycle not in blocked[poss[0]][poss[1]]:
                     future.add(poss)
         current = future
+    return s
+
+
+def calc(data):
+    start = (0, data[0].index("."))
+    pos = (0, data[0].index("."))
+    target = (len(data) - 1, data[-1].index("."))
+    cycle = common_div(len(data), len(data[0]))
+    blocked = precalc(data, cycle)
 
     current = {start}
-    while target not in current:
-        s += 1
-        future = set()
-        for pos in current:
-            if pos[0] == 0:
-                possible = [pos, (pos[0] + 1, pos[1])]
-            else:
-                possible = [
-                    pos,
-                    (pos[0] - 1, pos[1]),
-                    (pos[0] + 1, pos[1]),
-                    (pos[0], pos[1] - 1),
-                    (pos[0], pos[1] + 1),
-                ]
-            for poss in possible:
-                if (s + 1) % cycle not in blocked[poss[0]][poss[1]]:
-                    future.add(poss)
-        current = future
+    s = solve(start, target, blocked, cycle)
+    s += 1
+    return s
+            
+
+def calc2(data):
+    start = (0, data[0].index("."))
+    pos = (0, data[0].index("."))
+    target = (len(data) - 1, data[-1].index("."))
+    cycle = common_div(len(data), len(data[0]))
+    blocked = precalc(data, cycle)
+    s = 0
+    s = solve(start, target, blocked, cycle, s)
+    s = solve(target, start, blocked, cycle, s)
+    s = solve(start, target, blocked, cycle, s)
     s += 1
 
     return s
