@@ -44,11 +44,6 @@ def calc(data):
     return val_to_snafu(total)
 
 
-def calc2(data):
-    score = 0
-    return score
-
-
 test_data = """1=-0-2
 12111
 2=0=
