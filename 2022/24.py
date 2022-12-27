@@ -1,3 +1,4 @@
+import functools
 import requests
 
 day = 24
@@ -9,8 +10,7 @@ active = True
 
 def parse(indata):
     data_rows = indata.split("\n")
-    data = [row for row in data_rows if row]
-    return data
+    return tuple(row for row in data_rows if row)
 
 
 def calc_block_rate(data, blizz_steps):
@@ -52,6 +52,24 @@ def step(positions, dirs, b_size):
     return tuple(new_pos)
 
 
+@functools.cache
+def precalc(data):
+    b_size = (len(data), len(data[0]))
+    blizz_dirs = []
+    blizz_steps = [[]]
+    for i, row in enumerate(data):
+        for j, c in enumerate(row):
+            if c not in ("#", "."):
+                blizz_steps[0].append((i, j))
+                blizz_dirs.append(blizz_dir(c))
+
+    cycle = common_div(len(data), len(data[0]))
+    for _ in range(cycle - 1):
+        blizz_steps.append(step(blizz_steps[-1], blizz_dirs, b_size))
+
+    return calc_block_rate(data, blizz_steps)
+
+
 def common_div(val1, val2):
     i = 2
     divs = 1
@@ -74,20 +92,8 @@ def calc(data):
     start = (0, data[0].index("."))
     pos = (0, data[0].index("."))
     target = (len(data) - 1, data[-1].index("."))
-    b_size = (len(data), len(data[0]))
-    blizz_dirs = []
-    blizz_steps = [[]]
-    for i, row in enumerate(data):
-        for j, c in enumerate(row):
-            if c not in ("#", "."):
-                blizz_steps[0].append((i, j))
-                blizz_dirs.append(blizz_dir(c))
-
+    blocked = precalc(data)
     cycle = common_div(len(data), len(data[0]))
-    for _ in range(cycle - 1):
-        blizz_steps.append(step(blizz_steps[-1], blizz_dirs, b_size))
-
-    blocked = calc_block_rate(data, blizz_steps)
 
     current = {start}
     s = 0
@@ -117,20 +123,9 @@ def calc2(data):
     start = (0, data[0].index("."))
     pos = (0, data[0].index("."))
     target = (len(data) - 1, data[-1].index("."))
-    b_size = (len(data), len(data[0]))
-    blizz_dirs = []
-    blizz_steps = [[]]
-    for i, row in enumerate(data):
-        for j, c in enumerate(row):
-            if c not in ("#", "."):
-                blizz_steps[0].append((i, j))
-                blizz_dirs.append(blizz_dir(c))
+    blocked = precalc(data)
 
     cycle = common_div(len(data), len(data[0]))
-    for _ in range(cycle - 1):
-        blizz_steps.append(step(blizz_steps[-1], blizz_dirs, b_size))
-
-    blocked = calc_block_rate(data, blizz_steps)
 
     current = {start}
     s = 0
