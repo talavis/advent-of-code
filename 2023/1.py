@@ -49,31 +49,21 @@ def calc2(data):
         v2 = ""
         for i in range(len(r)):
             if r[i] in "0123456789":
-                v1 = r[i]
-                break
-            if r[i:i+3] in mapper:
-                v1 = mapper[r[i:i+3]]
-                break
-            if r[i:i+4] in mapper:
-                v1 = mapper[r[i:i+4]]
-                break
-            if r[i:i+5] in mapper:
-                v1 = mapper[r[i:i+5]]
-                break
-
-        for i in range(len(r)-1, -1, -1):
-            if r[i] in "0123456789":
+                if not v1:
+                    v1 = r[i]
                 v2 = r[i]
-                break
-            if i-2 >= 0 and r[i-2:i+1] in mapper:
-                v2 = mapper[r[i-2:i+1]]
-                break
-            if i-3 >= 0 and r[i-3:i+1] in mapper:
-                v2 = mapper[r[i-3:i+1]]
-                break
-            if i-4 >= 0 and r[i-4:i+1] in mapper:
-                v2 = mapper[r[i-4:i+1]]
-                break
+            elif i+3 <= len(r) and r[i:i+3] in mapper:
+                if not v1:
+                    v1 = mapper[r[i:i+3]]
+                v2 = mapper[r[i:i+3]]
+            elif i+4 <= len(r) and r[i:i+4] in mapper:
+                if not v1:
+                    v1 = mapper[r[i:i+4]]
+                v2 = mapper[r[i:i+4]]
+            elif i+5 <= len(r) and r[i:i+5] in mapper:
+                if not v1:
+                    v1 = mapper[r[i:i+5]]
+                v2 = mapper[r[i:i+5]]
         digsum += int(v1+v2)
     return digsum
 
