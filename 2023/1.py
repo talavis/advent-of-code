@@ -26,7 +26,7 @@ def calc(data):
             if c in "0123456789":
                 v2 = c
                 break
-        digsum += int(v1+v2)
+        digsum += int(v1 + v2)
     return digsum
 
 
@@ -42,7 +42,7 @@ def calc2(data):
         "eight": "8",
         "nine": "9",
     }
-    
+
     digsum = 0
     for r in data:
         v1 = ""
@@ -52,19 +52,19 @@ def calc2(data):
                 if not v1:
                     v1 = r[i]
                 v2 = r[i]
-            elif i+3 <= len(r) and r[i:i+3] in mapper:
+            elif i + 3 <= len(r) and r[i : i + 3] in mapper:
                 if not v1:
-                    v1 = mapper[r[i:i+3]]
-                v2 = mapper[r[i:i+3]]
-            elif i+4 <= len(r) and r[i:i+4] in mapper:
+                    v1 = mapper[r[i : i + 3]]
+                v2 = mapper[r[i : i + 3]]
+            elif i + 4 <= len(r) and r[i : i + 4] in mapper:
                 if not v1:
-                    v1 = mapper[r[i:i+4]]
-                v2 = mapper[r[i:i+4]]
-            elif i+5 <= len(r) and r[i:i+5] in mapper:
+                    v1 = mapper[r[i : i + 4]]
+                v2 = mapper[r[i : i + 4]]
+            elif i + 5 <= len(r) and r[i : i + 5] in mapper:
                 if not v1:
-                    v1 = mapper[r[i:i+5]]
-                v2 = mapper[r[i:i+5]]
-        digsum += int(v1+v2)
+                    v1 = mapper[r[i : i + 5]]
+                v2 = mapper[r[i : i + 5]]
+        digsum += int(v1 + v2)
     return digsum
 
 

@@ -31,22 +31,22 @@ def parse(indata):
 
 def calc(data):
     def find_symbol(r, x1, x2):
-        start_r = r-1
+        start_r = r - 1
         if r == 0:
             start_r = 0
-        end_r = r+1
+        end_r = r + 1
         if end_r >= len(data):
             end_r = r
 
-        start_x = x1-1
+        start_x = x1 - 1
         if x1 == 0:
             start_x = 0
-        end_x = x2+1
+        end_x = x2 + 1
         if end_x >= len(data[r]):
             end_x = x2
 
-        for i in range(start_r, end_r+1):
-            for j in range(start_x, end_x+1):
+        for i in range(start_r, end_r + 1):
+            for j in range(start_x, end_x + 1):
                 if data[i][j] not in "0123456789.":
                     return True
         return False
@@ -66,46 +66,46 @@ def calc(data):
             elif num[0] != -1:
                 numbers.append((r, num[0], num[1]))
                 if find_symbol(r, num[0], num[1]):
-                    score += int(data[r][num[0]:num[1]+1])
+                    score += int(data[r][num[0] : num[1] + 1])
                 num = [-1, -1]
         if num[0] != -1:
             numbers.append((r, num[0], num[1]))
             if find_symbol(r, num[0], num[1]):
-                score += int(data[r][num[0]:num[1]+1])
+                score += int(data[r][num[0] : num[1] + 1])
             num = [-1, -1]
     return score
 
 
 def calc2(data):
     def find_gear(r, x1, x2, gears):
-        start_r = r-1
+        start_r = r - 1
         if r == 0:
             start_r = 0
-        end_r = r+1
+        end_r = r + 1
         if end_r >= len(data):
             end_r = r
 
-        start_x = x1-1
+        start_x = x1 - 1
         if x1 == 0:
             start_x = 0
-        end_x = x2+1
+        end_x = x2 + 1
         if end_x >= len(data[r]):
             end_x = x2
 
-        for i in range(start_r, end_r+1):
-            for j in range(start_x, end_x+1):
+        for i in range(start_r, end_r + 1):
+            for j in range(start_x, end_x + 1):
                 if data[i][j] == "*":
-                    gears[(i,j)].append(int(data[r][x1:x2+1]))
+                    gears[(i, j)].append(int(data[r][x1 : x2 + 1]))
 
     score = 0
     numbers = []
-    gears = {} # {(r,x): [numbers]}
+    gears = {}  # {(r,x): [numbers]}
 
     for r in range(len(data)):
         num = [-1, -1]
         for c in range(len(data[r])):
             if data[r][c] == "*":
-                gears[(r,c)] = []
+                gears[(r, c)] = []
             if data[r][c] in "0123456789":
                 if num[0] == -1:
                     num[0] = c
@@ -123,7 +123,7 @@ def calc2(data):
         find_gear(*num, gears)
     for gear in gears:
         if len(gears[gear]) == 2:
-            score += gears[gear][0] * gears[gear][1] 
+            score += gears[gear][0] * gears[gear][1]
 
     return score
 
