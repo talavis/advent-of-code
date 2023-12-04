@@ -29,8 +29,8 @@ def calc(data):
     score = 0
     for row in data:
         s = 0
-        vals = [int(val) for val in row[row.index(":")+1:row.index("|")].strip().split()]
-        hits = set(int(hit) for hit in row[row.index("|")+1:].strip().split())
+        vals = [int(val) for val in row[row.index(":") + 1 : row.index("|")].strip().split()]
+        hits = set(int(hit) for hit in row[row.index("|") + 1 :].strip().split())
         for val in vals:
             if val in hits:
                 if s == 0:
@@ -45,14 +45,14 @@ def calc2(data):
     scores = [1] * len(data)
     for i, row in enumerate(data):
         s = 0
-        vals = [int(val) for val in row[row.index(":")+1:row.index("|")].strip().split()]
-        hits = set(int(hit) for hit in row[row.index("|")+1:].strip().split())
+        vals = [int(val) for val in row[row.index(":") + 1 : row.index("|")].strip().split()]
+        hits = set(int(hit) for hit in row[row.index("|") + 1 :].strip().split())
         for val in vals:
             if val in hits:
                 s += 1
         for j in range(s):
-            if i+j+1 < len(scores):
-                scores[i+j+1] += scores[i]
+            if i + j + 1 < len(scores):
+                scores[i + j + 1] += scores[i]
     return sum(scores)
 
 
