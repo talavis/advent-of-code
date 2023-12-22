@@ -230,7 +230,6 @@ def calc2(data):
             if s != "ground":
                 supporting[s].add(k)
 
-    score = 0
     to_destroy = set()
     for k in bricks:
         supported = supporting[k]
@@ -240,22 +239,19 @@ def calc2(data):
                 break
 
     def cascade(d, supporters):
-        import copy
+        dead = {d}
+        lost = True
+        while lost:
+            lost = False
+            for s in list(supporters):
+                if s in dead:
+                    continue
+                a = supporters[s]
+                if len(a.intersection(dead)) == len(a):
+                    dead.add(s)
+                    lost = True
 
-        sup = copy.deepcopy(supporters)
-        q = {d}
-        destroyed = 0
-        while q:
-            b = q.pop()
-            for s in list(sup):
-                if b in sup[s]:
-                    sup[s].remove(b)
-                if not sup[s]:
-                    q.add(s)
-                    destroyed += 1
-                    del sup[s]
-
-        return destroyed
+        return len(dead)-1
 
     score = 0
     for d in to_destroy:
