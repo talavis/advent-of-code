@@ -30,15 +30,15 @@ def calc(data):
     for i, d in enumerate(data):
         v = int(d)
         if i % 2 == 0:
-            storage.extend([b]*v)
+            storage.extend([b] * v)
             b += 1
         else:
-            storage.extend([None]*v)
+            storage.extend([None] * v)
     i = 0
-    while i < len(storage)-1:
+    while i < len(storage) - 1:
         if storage[i] is None:
             d = storage.pop()
-            while d is None and len(storage)+1 > i:
+            while d is None and len(storage) + 1 > i:
                 d = storage.pop()
             storage[i] = d
             i += 1
@@ -48,8 +48,8 @@ def calc(data):
     ans = 0
     for i in range(len(storage)):
         if storage[i] is not None:
-            ans += i*storage[i]
-            
+            ans += i * storage[i]
+
     return ans
 
 
@@ -60,11 +60,11 @@ def calc2(data):
     for i, d in enumerate(data):
         v = int(d)
         if i % 2 == 0:
-            storage.extend([b]*v)
+            storage.extend([b] * v)
             blocks[b] = v
             b += 1
         else:
-            storage.extend([None]*v)
+            storage.extend([None] * v)
 
     i = 0
     b = max(blocks.keys())
@@ -73,6 +73,7 @@ def calc2(data):
         l = blocks[b]
         i = 0
         sl = 0
+        e = len(storage) - 1
         start = 0
         while sl < l and storage[i] != b:
             if storage[i] is None:
@@ -84,21 +85,15 @@ def calc2(data):
             i += 1
         if sl == l:
             started = False
-            while i < len(storage):
-                if storage[i] == b:
-                    storage[i] = None
-                    started = True
-                elif started:
-                    break
-                i += 1
-            for i in range(l):
-                storage[start+i] = b
+            while storage[e] in (b, None):
+                storage[e] = None
+                e -= 1
         b -= 1
 
     ans = 0
     for i in range(len(storage)):
         if storage[i] is not None:
-            ans += i*storage[i]
+            ans += i * storage[i]
 
     return ans
 

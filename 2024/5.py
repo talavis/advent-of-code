@@ -74,11 +74,11 @@ def calc(data):
     updates = data[1]
 
     ans = 0
-    
+
     for update in updates:
         correct = True
         for i in range(len(update)):
-            for j in range(i+1, len(update)):
+            for j in range(i + 1, len(update)):
                 if update[j] not in orders:
                     orders[update[j]] = {}
                 if update[i] not in orders:
@@ -89,7 +89,7 @@ def calc(data):
             if not correct:
                 break
         if correct:
-            ans += update[len(update)//2]
+            ans += update[len(update) // 2]
     return ans
 
 
@@ -98,11 +98,11 @@ def calc2(data):
     updates = data[1]
 
     ans = 0
-    
+
     for update in updates:
         correct = True
         for i in range(len(update)):
-            for j in range(i+1, len(update)):
+            for j in range(i + 1, len(update)):
                 if update[j] not in orders:
                     orders[update[j]] = {}
                 if update[i] not in orders:
@@ -125,7 +125,7 @@ def calc2(data):
                         swapped = True
                 if not swapped:
                     i += 1
-            ans += new_update[len(new_update)//2]            
+            ans += new_update[len(new_update) // 2]
     return ans
 
 

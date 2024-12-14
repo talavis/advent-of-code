@@ -46,7 +46,7 @@ def calc(data):
         if res > 0:
             return res
         return step(start * remaining[0], goal, remaining[1:])
-    
+
     ans = 0
     for row in data:
         ans += step(0, row[0], row[1])
@@ -68,7 +68,7 @@ def calc2(data):
         if res > 0:
             return res
         return step(int(str(start) + str(remaining[0])), goal, remaining[1:])
-    
+
     ans = 0
     for row in data:
         ans += step(0, row[0], row[1])

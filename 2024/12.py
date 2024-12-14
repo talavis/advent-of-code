@@ -34,7 +34,7 @@ def parse(indata):
 def calc(data):
     regions = []
     dirs = ((1, 0), (-1, 0), (0, 1), (0, -1))
-    for i  in range(len(data)):
+    for i in range(len(data)):
         for j in range(len(data[i])):
             new_reg = True
             for reg in regions:
@@ -49,8 +49,13 @@ def calc(data):
                     pos = stack.pop()
                     regions[-1].add(pos)
                     for d in dirs:
-                        new_pos = (pos[0]+d[0], pos[1]+d[1])
-                        if new_pos not in regions[-1] and 0 <= new_pos[0] < len(data) and 0 <= new_pos[1] < len(data[0]) and data[new_pos[0]][new_pos[1]] == val:
+                        new_pos = (pos[0] + d[0], pos[1] + d[1])
+                        if (
+                            new_pos not in regions[-1]
+                            and 0 <= new_pos[0] < len(data)
+                            and 0 <= new_pos[1] < len(data[0])
+                            and data[new_pos[0]][new_pos[1]] == val
+                        ):
                             stack.add(new_pos)
 
     ans = 0
@@ -58,17 +63,17 @@ def calc(data):
         peri = 0
         for pos in reg:
             for d in dirs:
-                n = (pos[0]+d[0], pos[1]+d[1])
+                n = (pos[0] + d[0], pos[1] + d[1])
                 if n not in reg:
                     peri += 1
-        ans += peri*len(reg)
+        ans += peri * len(reg)
     return ans
 
 
 def calc2(data):
     regions = []
     dirs = ((1, 0), (0, 1), (-1, 0), (0, -1))
-    for i  in range(len(data)):
+    for i in range(len(data)):
         for j in range(len(data[i])):
             new_reg = True
             for reg in regions:
@@ -83,8 +88,13 @@ def calc2(data):
                     pos = stack.pop()
                     regions[-1].add(pos)
                     for d in dirs:
-                        new_pos = (pos[0]+d[0], pos[1]+d[1])
-                        if new_pos not in regions[-1] and 0 <= new_pos[0] < len(data) and 0 <= new_pos[1] < len(data[0]) and data[new_pos[0]][new_pos[1]] == val:
+                        new_pos = (pos[0] + d[0], pos[1] + d[1])
+                        if (
+                            new_pos not in regions[-1]
+                            and 0 <= new_pos[0] < len(data)
+                            and 0 <= new_pos[1] < len(data[0])
+                            and data[new_pos[0]][new_pos[1]] == val
+                        ):
                             stack.add(new_pos)
 
     ans = 0
@@ -93,21 +103,25 @@ def calc2(data):
         corners = 0
         dirs = ((1, 0), (0, 1), (-1, 0), (0, -1))
         corner_pos = ((0, 1), (1, 2), (2, 3), (3, 0))
-        diagonals = ((1,1), (-1, 1), (-1, -1), (1, -1))
+        diagonals = ((1, 1), (-1, 1), (-1, -1), (1, -1))
         for pos in reg:
             neighbours = []
             for d in dirs:
-                neighbours.append((pos[0]+d[0], pos[1]+d[1]))
+                neighbours.append((pos[0] + d[0], pos[1] + d[1]))
             for c in corner_pos:
                 # "external" corners (two sides empty)
                 if neighbours[c[0]] not in reg and neighbours[c[1]] not in reg:
                     corners += 1
                 # "internal corners" (all sides exist, but neighbours have missing corrsesponding neighbours)
                 if neighbours[c[0]] in reg and neighbours[c[1]] in reg:
-                    if (pos[0] + diagonals[c[0]][0], pos[1] + diagonals[c[0]][1]) not in reg:
+                    if (
+                        pos[0] + diagonals[c[0]][0],
+                        pos[1] + diagonals[c[0]][1],
+                    ) not in reg:
                         corners += 1
-        ans += corners*len(reg)
+        ans += corners * len(reg)
     return ans
+
 
 if testing:
     if part1:

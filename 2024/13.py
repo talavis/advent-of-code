@@ -41,13 +41,9 @@ def parse(indata):
             pos = row.split(": ")[1]
             cols = pos.split(", ")
             if "+" in cols[0]:
-                data[-1].append(
-                    (int(cols[0].split("+")[1]), int(cols[1].split("+")[1]))
-                )
+                data[-1].append((int(cols[0].split("+")[1]), int(cols[1].split("+")[1])))
             else:
-                data[-1].append(
-                    [int(cols[0].split("=")[1]), int(cols[1].split("=")[1])]
-                )
+                data[-1].append([int(cols[0].split("=")[1]), int(cols[1].split("=")[1])])
     if not data[-1]:
         data.pop()
     return data
@@ -81,7 +77,7 @@ def calc2(data):
     # ix*a + jx*b = kx
     # iy*a + jy*b = ky
     #
-    # general solution form: 
+    # general solution form:
     # a = (kx * jy - ky * jx) // (jy * ix - jx * iy)
     # b = (kx * iy - ky * ix) // (iy * jx - jy * ix)
     ans = 0
@@ -118,9 +114,7 @@ if active:
     try:
         raw = open(f"{day}.txt").read()
     except FileNotFoundError:
-        raw = requests.get(
-            f"https://adventofcode.com/2024/day/{day}/input", cookies=cookies
-        ).text
+        raw = requests.get(f"https://adventofcode.com/2024/day/{day}/input", cookies=cookies).text
         with open(f"{day}.txt", "w") as outfile:
             outfile.write(raw)
     if part1:

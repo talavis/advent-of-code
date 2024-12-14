@@ -47,20 +47,20 @@ def calc(data, size=(101, 103)):
         for i in range(len(rs)):
             new_x = rs[i][0] + vs[i][0]
             if new_x < 0:
-                new_x = size[0]+new_x
+                new_x = size[0] + new_x
             if new_x >= size[0]:
                 new_x = new_x - size[0]
 
             new_y = rs[i][1] + vs[i][1]
             if new_y < 0:
-                new_y = size[1]+new_y
+                new_y = size[1] + new_y
             if new_y >= size[1]:
                 new_y = new_y - size[1]
             rs[i] = (new_x, new_y)
 
     xdiv = size[0] // 2
     ydiv = size[1] // 2
-    qs = [0]*4
+    qs = [0] * 4
     for r in rs:
         q = [-1, -1]
         if r[0] < xdiv:
@@ -73,8 +73,8 @@ def calc(data, size=(101, 103)):
             q[1] = 1
         if -1 in q:
             continue
-        qs[q[0]+2*q[1]] += 1
-            
+        qs[q[0] + 2 * q[1]] += 1
+
     ans = 1
     for q in qs:
         ans *= q
@@ -94,13 +94,13 @@ def calc2(data, size=(101, 103)):
         for i in range(len(rs)):
             new_x = rs[i][0] + vs[i][0]
             if new_x < 0:
-                new_x = size[0]+new_x
+                new_x = size[0] + new_x
             if new_x >= size[0]:
                 new_x = new_x - size[0]
 
             new_y = rs[i][1] + vs[i][1]
             if new_y < 0:
-                new_y = size[1]+new_y
+                new_y = size[1] + new_y
             if new_y >= size[1]:
                 new_y = new_y - size[1]
             rs[i] = (new_x, new_y)
@@ -114,12 +114,12 @@ def calc2(data, size=(101, 103)):
         rowls = []
         for r in per_row:
             rowls.append(len(per_row[r]))
-        
+
         if max(rowls) > highest:
             highest = max(rowls)
             best = s
             for i in range(size[1]):
-                row = ["."]*size[0]
+                row = ["."] * size[0]
                 if i in per_row:
                     for r in per_row[i]:
                         row[r] = "+"

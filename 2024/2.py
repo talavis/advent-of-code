@@ -82,12 +82,11 @@ def calc2(data):
             total += 1
         else:
             for i in range(len(report)):
-                res = eval(report[:i] + report[i+1:])
+                res = eval(report[:i] + report[i + 1 :])
                 if res:
                     total += 1
                     break
     return total
-
 
 
 if testing:

@@ -39,7 +39,7 @@ def calc(data):
                 heads.append((i, j))
 
     def find_access(start):
-        dirs = ((1,0), (-1, 0), (0, 1), (0, -1))
+        dirs = ((1, 0), (-1, 0), (0, 1), (0, -1))
         stack = {start}
         tested = {start}
         reachable = {start}
@@ -58,7 +58,7 @@ def calc(data):
                         stack.add(pos)
                         reachable.add(pos)
         return len(tops)
-    
+
     ans = 0
     for pos in heads:
         ans += find_access(pos)
@@ -73,7 +73,7 @@ def calc2(data):
                 heads.append((i, j))
 
     def find_access(start):
-        dirs = ((1,0), (-1, 0), (0, 1), (0, -1))
+        dirs = ((1, 0), (-1, 0), (0, 1), (0, -1))
         stack = [start]
         tops = []
         while stack:
@@ -88,7 +88,7 @@ def calc2(data):
                     if val - work_val == 1:
                         stack.append(pos)
         return len(tops)
-    
+
     ans = 0
     for pos in heads:
         ans += find_access(pos)

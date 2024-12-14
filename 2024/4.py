@@ -48,7 +48,7 @@ def calc(data, word="XMAS"):
         for d in directions:
             count += test_match(i, j, d)
         return count
-    
+
     def test_match(i, j, direction):
         for s in range(1, len(word)):
             i += direction[0]
@@ -58,7 +58,7 @@ def calc(data, word="XMAS"):
             if data[i][j] != word[s]:
                 return 0
         return 1
-          
+
     count = 0
     for i in range(len(data)):
         for j in range(len(data[0])):
@@ -68,10 +68,12 @@ def calc(data, word="XMAS"):
 
 def calc2(data):
     count = 0
-    for i in range(1, len(data)-1):
-        for j in range(1, len(data[0])-1):
+    for i in range(1, len(data) - 1):
+        for j in range(1, len(data[0]) - 1):
             if data[i][j] == "A":
-                if data[i-1][j-1]+data[i+1][j+1] in ("MS", "SM") and data[i+1][j-1]+data[i-1][j+1] in ("MS", "SM"):
+                if data[i - 1][j - 1] + data[i + 1][j + 1] in ("MS", "SM") and data[i + 1][
+                    j - 1
+                ] + data[i - 1][j + 1] in ("MS", "SM"):
                     count += 1
     return count
 

@@ -23,7 +23,7 @@ def calc(data):
     c2 = sorted(r[1] for r in data)
     tot_distance = 0
     for i in range(len(c1)):
-        tot_distance += abs(c1[i]-c2[i])
+        tot_distance += abs(c1[i] - c2[i])
     return tot_distance
 
 
@@ -32,7 +32,7 @@ def calc2(data):
     c2 = sorted(r[1] for r in data)
     sim_score = 0
     for c in c1:
-        sim_score += c*c2.count(c)
+        sim_score += c * c2.count(c)
     return sim_score
 
 

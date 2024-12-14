@@ -43,8 +43,13 @@ def calc(data):
     d = 0
 
     while True:
-        new_pos = (pos[0]+dirs[d][0], pos[1]+dirs[d][1])
-        if new_pos[0] < 0 or new_pos[0] == len(data) or new_pos[1] < 0 or new_pos[1] == len(data[0]):
+        new_pos = (pos[0] + dirs[d][0], pos[1] + dirs[d][1])
+        if (
+            new_pos[0] < 0
+            or new_pos[0] == len(data)
+            or new_pos[1] < 0
+            or new_pos[1] == len(data[0])
+        ):
             break
         if data[new_pos[0]][new_pos[1]] == "#":
             d = (d + 1) % 4
@@ -66,8 +71,13 @@ def calc2(data):
     d = 0
 
     while True:
-        new_pos = (pos[0]+dirs[d][0], pos[1]+dirs[d][1])
-        if new_pos[0] < 0 or new_pos[0] == len(data) or new_pos[1] < 0 or new_pos[1] == len(data[0]):
+        new_pos = (pos[0] + dirs[d][0], pos[1] + dirs[d][1])
+        if (
+            new_pos[0] < 0
+            or new_pos[0] == len(data)
+            or new_pos[1] < 0
+            or new_pos[1] == len(data[0])
+        ):
             break
         if data[new_pos[0]][new_pos[1]] == "#":
             d = (d + 1) % 4
@@ -83,8 +93,13 @@ def calc2(data):
         pos = POS
         d = 0
         while True:
-            new_pos = (pos[0]+dirs[d][0], pos[1]+dirs[d][1])
-            if new_pos[0] < 0 or new_pos[0] == len(data) or new_pos[1] < 0 or new_pos[1] == len(data[0]):
+            new_pos = (pos[0] + dirs[d][0], pos[1] + dirs[d][1])
+            if (
+                new_pos[0] < 0
+                or new_pos[0] == len(data)
+                or new_pos[1] < 0
+                or new_pos[1] == len(data[0])
+            ):
                 break
             if data[new_pos[0]][new_pos[1]] == "#" or new_pos == o:
                 d = (d + 1) % 4
