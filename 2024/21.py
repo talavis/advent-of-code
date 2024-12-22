@@ -27,6 +27,7 @@ def parse(indata):
     data = [row for row in data_rows if row]
     return data
 
+
 def calc(data):
     cpad = {c: (i % 3, i // 3) for i, c in enumerate("789456123x0A")}
     dpad = {c: (i % 3, i // 3) for i, c in enumerate("x^A<v>")}

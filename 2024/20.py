@@ -41,8 +41,8 @@ def parse(indata):
 def calc(data, limit=100):
     def distances(start, area):
         dirs = ((-1, 0), (0, 1), (1, 0), (0, -1))
-        
-        dists = [[0]*len(area[0]) for _ in range(len(area))]
+
+        dists = [[0] * len(area[0]) for _ in range(len(area))]
         for i in range(len(area)):
             for j in range(len(area[i])):
                 if area[i][j] == "#":
@@ -55,7 +55,7 @@ def calc(data, limit=100):
         while not q.empty():
             pos = q.get()
             for d in dirs:
-                p = (pos[0]+d[0], pos[1]+d[1])
+                p = (pos[0] + d[0], pos[1] + d[1])
                 if 0 <= p[0] < len(area) and 0 <= p[1] < len(area[0]):
                     if p not in visited and area[p[0]][p[1]] != "#":
                         visited.add(p)
@@ -71,9 +71,9 @@ def calc(data, limit=100):
                 p = (pos[0] + d[0] + e[0], pos[1] + d[1] + e[1])
                 if 0 <= p[0] < len(dists_s) and 0 <= p[1] < len(dists_s[0]):
                     if base - (val := dists_s[pos[0]][pos[1]] + dists_e[p[0]][p[1]] + 2) >= limit:
-                        cheats.add((pos, p, base-val))
+                        cheats.add((pos, p, base - val))
         return cheats
-    
+
     for i, row in enumerate(data):
         for j, c in enumerate(row):
             if c == "S":
@@ -93,14 +93,13 @@ def calc(data, limit=100):
                 cheats = cheats.union(search((i, j), base, dists_s, dists_e))
 
     return len(cheats)
-                                      
 
 
 def calc2(data, limit=100):
     def distances(start, area):
         dirs = ((-1, 0), (0, 1), (1, 0), (0, -1))
-        
-        dists = [[0]*len(area[0]) for _ in range(len(area))]
+
+        dists = [[0] * len(area[0]) for _ in range(len(area))]
         for i in range(len(area)):
             for j in range(len(area[i])):
                 if area[i][j] == "#":
@@ -113,7 +112,7 @@ def calc2(data, limit=100):
         while not q.empty():
             pos = q.get()
             for d in dirs:
-                p = (pos[0]+d[0], pos[1]+d[1])
+                p = (pos[0] + d[0], pos[1] + d[1])
                 if 0 <= p[0] < len(area) and 0 <= p[1] < len(area[0]):
                     if p not in visited and area[p[0]][p[1]] != "#":
                         visited.add(p)
@@ -124,13 +123,17 @@ def calc2(data, limit=100):
     def search(pos, base, dists_s, dists_e, dist=2):
         cheats = set()
         for i in range(-20, 21):
-            for j in range(-(20-abs(i)), 21-abs(i)):
+            for j in range(-(20 - abs(i)), 21 - abs(i)):
                 p = (pos[0] + i, pos[1] + j)
                 if 0 <= p[0] < len(dists_s) and 0 <= p[1] < len(dists_s[0]):
-                    if base - (val := dists_s[pos[0]][pos[1]] + dists_e[p[0]][p[1]] + abs(i) + abs(j)) >= limit:
-                        cheats.add((pos, p, base-val))
+                    if (
+                        base
+                        - (val := dists_s[pos[0]][pos[1]] + dists_e[p[0]][p[1]] + abs(i) + abs(j))
+                        >= limit
+                    ):
+                        cheats.add((pos, p, base - val))
         return cheats
-    
+
     for i, row in enumerate(data):
         for j, c in enumerate(row):
             if c == "S":
